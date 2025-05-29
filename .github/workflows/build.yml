@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,12 +15,16 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
+            artifact_name: focusbuddy-x86_64-linux
           - os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
+            artifact_name: focusbuddy-aarch64-linux
           - os: windows-latest
             target: x86_64-pc-windows-msvc
+            artifact_name: focusbuddy-x86_64-windows
           - os: macos-latest
             target: x86_64-apple-darwin
+            artifact_name: focusbuddy-x86_64-macos
       fail-fast: false
 
     steps:
@@ -112,6 +117,6 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: focusbuddy-${{ matrix.target }}
+        name: ${{ matrix.artifact_name }}
         path: focusbuddy/target/${{ matrix.target }}/release/focusbuddy*
         if-no-files-found: error 
