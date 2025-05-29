@@ -82,14 +82,17 @@ jobs:
         chmod 644 test_tasks.txt
         
         # Verify project structure
+        echo "Current directory: $(pwd)"
+        echo "Directory contents:"
         ls -la
-        pwd
         
-        # Update Cargo.toml if needed
+        # Verify Cargo.toml
         if [ ! -f Cargo.toml ]; then
           echo "Error: Cargo.toml not found"
           exit 1
         fi
+        echo "Cargo.toml contents:"
+        cat Cargo.toml
 
     - name: Build
       working-directory: focusbuddy
@@ -97,22 +100,40 @@ jobs:
         PKG_CONFIG_PATH: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl/lib/pkgconfig' || '' }}
         RUST_BACKTRACE: 1
         RUSTFLAGS: "-C target-feature=+crt-static"
+        CARGO_TARGET_DIR: target
       run: |
-        # Show Rust version and target
+        # Show environment info
+        echo "Rust version:"
         rustc --version
+        echo "Rustup targets:"
         rustup show
+        echo "Environment variables:"
+        env | grep -E 'RUST|CARGO'
         
         # Clean and build
+        echo "Cleaning previous build..."
         cargo clean
+        echo "Updating dependencies..."
         cargo update
-        cargo check --target ${{ matrix.target }} --no-default-features
-        cargo build --release --target ${{ matrix.target }} --no-default-features
+        echo "Checking build..."
+        cargo check --target ${{ matrix.target }} --no-default-features -v
+        echo "Building release..."
+        cargo build --release --target ${{ matrix.target }} --no-default-features -v
         
         # Verify build output
+        echo "Checking build output..."
         if [ "${{ matrix.os }}" = "windows-latest" ]; then
           ls -la target/${{ matrix.target }}/release/focusbuddy.exe
+          if [ ! -f target/${{ matrix.target }}/release/focusbuddy.exe ]; then
+            echo "Error: Build output not found"
+            exit 1
+          fi
         else
           ls -la target/${{ matrix.target }}/release/focusbuddy
+          if [ ! -f target/${{ matrix.target }}/release/focusbuddy ]; then
+            echo "Error: Build output not found"
+            exit 1
+          fi
         fi
 
     - name: Upload artifacts
