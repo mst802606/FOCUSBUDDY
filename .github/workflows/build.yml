@@ -18,9 +18,10 @@ jobs:
             target: x86_64-pc-windows-msvc
           - os: macos-latest
             target: x86_64-apple-darwin
+      fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -105,7 +106,8 @@ jobs:
         fi
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: focusbuddy-${{ matrix.target }}
-        path: focusbuddy/target/${{ matrix.target }}/release/focusbuddy* 
+        path: focusbuddy/target/${{ matrix.target }}/release/focusbuddy*
+        if-no-files-found: error 
