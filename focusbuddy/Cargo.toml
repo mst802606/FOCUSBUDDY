@@ -8,10 +8,17 @@ description = "A command-line tool to help people with ADHD manage their time an
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
 chrono = "0.4"
-colored = "2.0"
+colored = "2.1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 anyhow = "1.0"
 thiserror = "1.0"
 indicatif = "0.17"
-dialoguer = "0.11" 
+dialoguer = "0.11"
+console = "0.15"
+notify = "6.1"
+notify-debouncer-mini = "0.4"
+toml = "0.8"
+
+[dev-dependencies]
+tempfile = "3.8" 

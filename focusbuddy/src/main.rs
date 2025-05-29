@@ -211,4 +211,62 @@ fn import_tasks(config: &mut Config, path: &str) -> Result<()> {
     }
     println!("{}", "Tasks imported successfully!".green());
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+
+    fn create_test_config() -> Config {
+        Config {
+            focus_duration: 25,
+            break_duration: 5,
+            tasks: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn test_add_task() {
+        let mut config = create_test_config();
+        let result = add_task(&mut config, "Test task");
+        assert!(result.is_ok());
+        
+        // Verify task was added
+        assert_eq!(config.tasks.len(), 1);
+        assert_eq!(config.tasks[0].description, "Test task");
+        assert!(!config.tasks[0].completed);
+    }
+
+    #[test]
+    fn test_list_tasks() {
+        let mut config = create_test_config();
+        
+        // Add some test tasks
+        add_task(&mut config, "Task 1").unwrap();
+        add_task(&mut config, "Task 2").unwrap();
+        add_task(&mut config, "Task 3").unwrap();
+        
+        // Test listing tasks
+        let result = list_tasks(&config);
+        assert!(result.is_ok());
+        
+        // Verify tasks were added
+        assert_eq!(config.tasks.len(), 3);
+    }
+
+    #[test]
+    fn test_start_focus_session() {
+        let mut config = create_test_config();
+        
+        // Add a test task
+        add_task(&mut config, "Test task").unwrap();
+        
+        // Test starting a focus session
+        let result = start_focus_session(&mut config);
+        assert!(result.is_ok());
+        
+        // Verify task was marked as completed
+        assert!(config.tasks[0].completed);
+    }
 } 
