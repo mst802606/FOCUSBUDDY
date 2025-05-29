@@ -16,15 +16,27 @@ jobs:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             artifact_name: focusbuddy-x86_64-linux
+            features: ""
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: focusbuddy-x86_64-linux-full
+            features: "system-deps"
           - os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
             artifact_name: focusbuddy-aarch64-linux
+            features: ""
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            artifact_name: focusbuddy-aarch64-linux-full
+            features: "system-deps"
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             artifact_name: focusbuddy-x86_64-windows
+            features: ""
           - os: macos-latest
             target: x86_64-apple-darwin
             artifact_name: focusbuddy-x86_64-macos
+            features: ""
       fail-fast: false
 
     steps:
@@ -48,7 +60,7 @@ jobs:
           ${{ runner.os }}-cargo-
 
     - name: Install dependencies (Ubuntu)
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest' && matrix.features == 'system-deps'
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential pkg-config libssl-dev gcc-aarch64-linux-gnu
@@ -116,9 +128,17 @@ jobs:
         echo "Updating dependencies..."
         cargo update
         echo "Checking build..."
-        cargo check --target ${{ matrix.target }} --no-default-features -v
+        if [ "${{ matrix.features }}" != "" ]; then
+          cargo check --target ${{ matrix.target }} --features ${{ matrix.features }} -v
+        else
+          cargo check --target ${{ matrix.target }} -v
+        fi
         echo "Building release..."
-        cargo build --release --target ${{ matrix.target }} --no-default-features -v
+        if [ "${{ matrix.features }}" != "" ]; then
+          cargo build --release --target ${{ matrix.target }} --features ${{ matrix.features }} -v
+        else
+          cargo build --release --target ${{ matrix.target }} -v
+        fi
         
         # Verify build output
         echo "Checking build output..."

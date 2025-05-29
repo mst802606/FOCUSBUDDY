@@ -8,6 +8,7 @@ description = "A command-line tool to help people with ADHD manage their time an
 [features]
 default = []
 notifications = ["notify", "notify-debouncer-mini"]
+system-deps = ["notifications"]
 
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
