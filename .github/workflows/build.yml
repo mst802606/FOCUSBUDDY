@@ -96,6 +96,7 @@ jobs:
       env:
         PKG_CONFIG_PATH: ${{ matrix.os == 'macos-latest' && '/usr/local/opt/openssl/lib/pkgconfig' || '' }}
         RUST_BACKTRACE: 1
+        RUSTFLAGS: "-C target-feature=+crt-static"
       run: |
         # Show Rust version and target
         rustc --version
