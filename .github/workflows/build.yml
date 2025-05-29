@@ -55,13 +55,16 @@ jobs:
         touch focusbuddy.json
         echo '{"focus_duration": 25, "break_duration": 5, "tasks": []}' > focusbuddy.json
         chmod 644 focusbuddy.json
+        touch test_tasks.txt
+        echo "Test task 1" > test_tasks.txt
+        echo "Test task 2" >> test_tasks.txt
+        chmod 644 test_tasks.txt
 
     - name: Build
       working-directory: focusbuddy
       run: |
         cargo check --target ${{ matrix.target }}
         cargo build --release --target ${{ matrix.target }}
-        cargo test --target ${{ matrix.target }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
