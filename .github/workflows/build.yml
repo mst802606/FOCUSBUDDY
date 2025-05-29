@@ -59,14 +59,18 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-cargo-
 
-    - name: Install dependencies (Ubuntu)
-      if: matrix.os == 'ubuntu-latest' && matrix.features == 'system-deps'
+    - name: Install dependencies (Ubuntu x86_64)
+      if: matrix.os == 'ubuntu-latest' && matrix.target == 'x86_64-unknown-linux-gnu'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential pkg-config libssl-dev gcc-x86-64-linux-gnu
+
+    - name: Install dependencies (Ubuntu aarch64)
+      if: matrix.os == 'ubuntu-latest' && matrix.target == 'aarch64-unknown-linux-gnu'
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential pkg-config libssl-dev gcc-aarch64-linux-gnu
-        if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
-          rustup target add aarch64-unknown-linux-gnu
-        fi
+        rustup target add aarch64-unknown-linux-gnu
 
     - name: Install dependencies (Windows)
       if: matrix.os == 'windows-latest'
@@ -114,6 +118,7 @@ jobs:
         RUSTFLAGS: "-C target-feature=+crt-static"
         CARGO_TARGET_DIR: target
       run: |
+        set -e
         # Show environment info
         echo "Rust version:"
         rustc --version
@@ -161,4 +166,10 @@ jobs:
       with:
         name: ${{ matrix.artifact_name }}
         path: focusbuddy/target/${{ matrix.target }}/release/focusbuddy*
-        if-no-files-found: error 
+        if-no-files-found: error
+
+    - name: Print last 100 lines of build log on failure
+      if: failure()
+      run: |
+        echo "==== Last 100 lines of build log ===="
+        tail -n 100 focusbuddy/target/${{ matrix.target }}/release/build.log || echo "No build log found." 
