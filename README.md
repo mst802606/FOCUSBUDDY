@@ -2,7 +2,7 @@
 
 A lightweight, terminal-based automation tool designed to help people with ADHD (or anyone who struggles with focus) manage their time, tasks, and energy with minimal mental overhead.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### For macOS Users
 1. Open Terminal
@@ -25,7 +25,7 @@ That's it! The launcher script will:
 - Set proper permissions
 - Start FocusBuddy automatically
 
-## 💻 Manual Start (Alternative)
+## Manual Start (Alternative)
 
 ### For macOS Users
 ```bash
@@ -38,7 +38,7 @@ chmod +x focusbuddy.sh
 ./focusbuddy.sh
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 - `focusbuddy.sh` - Main script
 - `start_focusbuddy.sh` - Launcher script
@@ -46,18 +46,18 @@ chmod +x focusbuddy.sh
 - `completed_tasks.csv` - Log of completed tasks
 - `focus_sessions.log` - Detailed session log
 
-## 🎮 Features
+## Features
 
-- 🎯 25-minute focus sessions (Pomodoro-style)
-- 📝 Task management system
-- ⏰ Automatic break reminders
-- 📊 Session logging and task tracking
-- 🎨 Color-coded terminal interface
-- ➕ Add custom tasks
-- 📥 Import tasks from external files
-- 📋 View and manage task list
+- 25-minute focus sessions (Pomodoro-style)
+- Task management system
+- Automatic break reminders
+- Session logging and task tracking
+- Color-coded terminal interface
+- Add custom tasks
+- Import tasks from external files
+- View and manage task list
 
-## 🎯 Key Benefits for ADHD Users
+## Key Benefits for ADHD Users
 
 - **Reduced Decision Fatigue**: Automatically manages your focus/break cycles, eliminating the need to constantly check the time
 - **Task Management**: Breaks down work into manageable chunks with clear start and end points
@@ -67,19 +67,7 @@ chmod +x focusbuddy.sh
 - **Task Completion Tracking**: Automatically logs completed tasks, providing a sense of accomplishment
 - **Reduced Cognitive Load**: Simple menu system and clear prompts reduce mental effort
 
-## 🚀 Features
-
-- 🎯 25-minute focus sessions (Pomodoro-style)
-- 📝 Task management system
-- ⏰ Automatic break reminders
-- 📊 Session logging and task tracking
-- 🎨 Color-coded terminal interface
-- 📂 Simple CSV-based logging
-- ➕ Add custom tasks
-- 📥 Import tasks from external files
-- 📋 View and manage task list
-
-## 💻 Installation
+## Installation
 
 1. Clone this repository or download the files
 2. Make the script executable:
@@ -88,7 +76,7 @@ chmod +x focusbuddy.sh
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
    ```
 
-## 🎮 Usage Guide
+## Usage Guide
 
 ### Starting FocusBuddy
 ```powershell
@@ -150,20 +138,20 @@ chmod +x focusbuddy.sh
   - Session details are stored in `focus_sessions.log`
   - Task list is automatically updated
 
-## 📁 File Structure
+## File Structure
 
 - `focusbuddy.ps1` - Main script
 - `tasks.txt` - Your task list
 - `completed_tasks.csv` - Log of completed tasks
 - `focus_sessions.log` - Detailed session log
 
-## ⚙️ Customization
+## Customization
 
 You can modify these variables in `focusbuddy.sh`:
 - `FOCUS_DURATION` - Length of focus sessions (default: 25 minutes)
 - `BREAK_DURATION` - Length of breaks (default: 5 minutes)
 
-## 💡 Tips for Success
+## Tips for Success
 
 1. **Task Management**
    - Break large tasks into smaller, manageable pieces
@@ -185,10 +173,10 @@ You can modify these variables in `focusbuddy.sh`:
    - Keep your terminal window visible
    - Consider using a second monitor for your work
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to submit issues and enhancement requests!
 
-## 📄 License
+## License
 
 This project is open source and available under the MIT License.
