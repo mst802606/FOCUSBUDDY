@@ -6,7 +6,7 @@ authors = ["Your Name <your.email@example.com>"]
 description = "A command-line tool to help people with ADHD manage their time and tasks"
 
 [features]
-default = ["notifications"]
+default = []
 notifications = ["notify", "notify-debouncer-mini"]
 
 [dependencies]
