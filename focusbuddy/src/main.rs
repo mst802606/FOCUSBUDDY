@@ -11,6 +11,11 @@ use std::{
     time::Duration,
 };
 
+#[cfg(feature = "notifications")]
+use notify::{Config, RecommendedWatcher, RecursiveMode, Watcher};
+#[cfg(feature = "notifications")]
+use notify_debouncer_mini::new_debouncer;
+
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Cli {
