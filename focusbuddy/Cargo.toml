@@ -5,6 +5,10 @@ edition = "2021"
 authors = ["Your Name <your.email@example.com>"]
 description = "A command-line tool to help people with ADHD manage their time and tasks"
 
+[features]
+default = ["notifications"]
+notifications = ["notify", "notify-debouncer-mini"]
+
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
 chrono = "0.4"
@@ -16,8 +20,8 @@ thiserror = "1.0"
 indicatif = "0.17"
 dialoguer = "0.11"
 console = "0.15"
-notify = "6.1"
-notify-debouncer-mini = "0.4"
+notify = { version = "6.1", optional = true }
+notify-debouncer-mini = { version = "0.4", optional = true }
 toml = "0.8"
 
 [dev-dependencies]
