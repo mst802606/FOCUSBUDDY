@@ -1,0 +1,14 @@
+# FocusBuddy Tasks
+# Add your tasks below, one per line
+# Lines starting with # are comments and will be ignored
+
+Review and respond to important emails
+Complete project documentation
+Write unit tests for new feature
+Code review for pull requests
+Plan next sprint tasks
+Update development environment
+Research new technology stack
+Clean up workspace personal task
+test task
+write an email to prof dominik bohler
