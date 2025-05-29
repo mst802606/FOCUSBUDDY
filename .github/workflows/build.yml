@@ -31,7 +31,7 @@ jobs:
           ~/.cargo/registry
           ~/.cargo/git
           focusbuddy/target
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-${{ hashFiles('focusbuddy/Cargo.lock') }}
         restore-keys: |
           ${{ runner.os }}-cargo-
 
@@ -52,19 +52,36 @@ jobs:
     - name: Setup project
       working-directory: focusbuddy
       run: |
-        touch focusbuddy.json
+        # Create necessary directories
+        mkdir -p target
+        
+        # Create or update focusbuddy.json
         echo '{"focus_duration": 25, "break_duration": 5, "tasks": []}' > focusbuddy.json
         chmod 644 focusbuddy.json
-        touch test_tasks.txt
+        
+        # Create test files
         echo "Test task 1" > test_tasks.txt
         echo "Test task 2" >> test_tasks.txt
         chmod 644 test_tasks.txt
+        
+        # Verify project structure
+        ls -la
+        pwd
 
     - name: Build
       working-directory: focusbuddy
       run: |
+        # Show Rust version and target
+        rustc --version
+        rustup show
+        
+        # Clean and build
+        cargo clean
         cargo check --target ${{ matrix.target }}
         cargo build --release --target ${{ matrix.target }}
+        
+        # Verify build output
+        ls -la target/${{ matrix.target }}/release/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
