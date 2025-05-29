@@ -49,6 +49,13 @@ jobs:
       run: |
         rustup target add x86_64-pc-windows-msvc
 
+    - name: Setup project
+      working-directory: focusbuddy
+      run: |
+        touch focusbuddy.json
+        echo '{"focus_duration": 25, "break_duration": 5, "tasks": []}' > focusbuddy.json
+        chmod 644 focusbuddy.json
+
     - name: Build
       working-directory: focusbuddy
       run: |
