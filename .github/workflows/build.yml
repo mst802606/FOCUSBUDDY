@@ -23,6 +23,7 @@ jobs:
         toolchain: stable
         override: true
         components: rustfmt, clippy
+        target: ${{ matrix.target }}
 
     - name: Cache dependencies
       uses: actions/cache@v3
@@ -34,9 +35,6 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('focusbuddy/Cargo.lock') }}
         restore-keys: |
           ${{ runner.os }}-cargo-
-
-    - name: Add target
-      run: rustup target add ${{ matrix.target }}
 
     - name: Install dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
@@ -67,6 +65,12 @@ jobs:
         # Verify project structure
         ls -la
         pwd
+        
+        # Update Cargo.toml if needed
+        if [ ! -f Cargo.toml ]; then
+          echo "Error: Cargo.toml not found"
+          exit 1
+        fi
 
     - name: Build
       working-directory: focusbuddy
@@ -77,6 +81,7 @@ jobs:
         
         # Clean and build
         cargo clean
+        cargo update
         cargo check --target ${{ matrix.target }}
         cargo build --release --target ${{ matrix.target }}
         
